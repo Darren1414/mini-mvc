@@ -1,0 +1,5 @@
+flask
+flask-classy
+flask-script
+sqlalchemy
+flask-sqlalchemy
