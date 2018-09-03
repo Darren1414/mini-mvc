@@ -17,12 +17,12 @@
 │　　　run_dbg_server.sh  
 │　　　requirement.txt  
 │  
-├─common　　　　　　　　　　　　　通用代码  
+├─common　　　　　　　　　　　　通用代码  
 │　　　　middlewares.py  
 │　　　　render.py  
 │　　　　utils.py  
 │      
-├─conf　　　　　　　　　　　　　　配置文件  
+├─conf　　　　　　　　　　　　　配置文件  
 │   　　   settings.py  
 │  
 ├─controller　　　　　　　　　　控制器代码（mvc的c部分）  
