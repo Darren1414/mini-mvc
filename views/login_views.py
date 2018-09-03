@@ -3,13 +3,11 @@
 import traceback
 from views.view_base import ViewBase
 from flask_classy import route
-from common.middlewares import *
 from controller.login_controller import LoginController
 
 # 登陆
 class LoginView(ViewBase):
     @route('/login', methods=['GET', 'POST'], endpoint='login')
-    @verify_params(phone='string', password='string')
     def login(self):
         code = '11000'
         data = {}
