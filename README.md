@@ -35,4 +35,8 @@
 └─views　（视图代码，mvc的v部分）  
 　　　　login_views.py  
 　　　　view_base.py  
+    
+    
+# License
+License: MIT
         
