@@ -3,6 +3,7 @@
 import traceback
 from views.view_base import ViewBase
 from flask_classy import route
+from common.write_log import writelog
 from controller.login_controller import LoginController
 
 # 登陆

@@ -14,17 +14,14 @@ class LoginController(ControllerBase):
 
     def login(self, phone, password):
         result = {}
-        try:
-            # 从数据库查询用户信息，如果正确，产生一个uuid，返回
-            user_item = self.db.session.query(User).filter(User.phone == phone, User.password == password).first()
-            if user_item:
-                token = uuid.uuid1().get_hex()
-                user_item.token = token
-                user_item.login_time = datetime.datetime.now()
-                self.db.session.commit()
+        # 从数据库查询用户信息，如果正确，产生一个uuid，返回
+        user_item = self.db.session.query(User).filter(User.phone == phone, User.password == password).first()
+        if user_item:
+            token = uuid.uuid1().get_hex()
+            user_item.token = token
+            user_item.login_time = datetime.datetime.now()
+            self.db.session.commit()
 
-                result['token'] = token
-        except:
-            writelog(traceback.format_exc())
+            result['token'] = token
 
         return result
