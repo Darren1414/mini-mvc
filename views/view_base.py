@@ -33,16 +33,16 @@ class ViewBase(FlaskView):
 
     def before_request(self, name, **kwargs):
         try:
-            #把每次请求记录，有迹可循
-            content = 'method:' + request.method + ',' + 'remote_addr:' + request.remote_addr + ',' + 'url:' + request.url + '\n' + \
-                      'data:' + str(request.data) + ',' + 'args:' + str(request.args) + ',' + 'form:' + str(request.form) + ',' + 'json:' + str(request.json)
-
+            # 把每次请求记录，有迹可循
+            content = 'remote_addr:%s, method:%s, url:%s, args:%s, data:%s' %\
+                      (request.remote_addr, request.method, request.url, request.args, request.data)
             writelog(content)
 
-            #获取参数
+            # 获取参数
             self.init_params()
 
-            #渲染器
+            # 渲染器
             self._render = Render()
+
         except:
             writelog(traceback.format_exc())

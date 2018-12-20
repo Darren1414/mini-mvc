@@ -3,14 +3,14 @@
 import os
 import re
 import types
-import json
+# import json
 import time
 import traceback
 from common.write_log import writelog
 from xml.dom import minidom
 from xml.etree.ElementTree import Element
 import xml.etree.ElementTree as ET
-from flask import request, make_response
+from flask import request, make_response, json
 from flask import render_template
 
 class Render():
@@ -30,24 +30,23 @@ class Render():
             writelog(traceback.format_exc())
 
     # 返回json
-    def render_json(self, code, data, msg='', status_code=200, set_cookie=None, headers=None):
+    def render_json(self, code, data, msg='', status_code=200, set_cookie=None):
         writelog(request.remote_addr + ' render_json:' + str(data) + '\n')
         try:
+            # python默认参数是不能为字典或者列表的，要像下面这样给默认值（直接set_cookie={}是错的）。
             if set_cookie is None:
                 set_cookie = {}
-
-            if headers is None:
-                headers = {}
 
             exec_time = time.time() - self.request_start_time
             data = {'code': code, 'time': exec_time, 'data': data, 'msg': msg}
 
             response = make_response(json.dumps(data))
-            response.headers['Content-Type'] = 'application/json'
-            response.headers['Access-Control-Request-Method'] = 'POST, GET, OPTIONS'
-            response.headers['Access-Control-Allow-Origin'] = headers.get('Origin', '*')
+            response.headers['Content-Type'] = 'application/json;charset=utf-8'
+            response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+            response.headers['Access-Control-Request-Method'] = 'POST, GET'
+            response.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin', '*')
 
-            if headers.get('Origin', ''):
+            if request.headers.get('Origin', ''):
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
 
             if set_cookie:
