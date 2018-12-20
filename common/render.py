@@ -89,9 +89,7 @@ class Render():
             writelog(traceback.format_exc())
 
     # 返回文件
-    def render_file(self, out_file, status_code=200, headers=None, auto_delete=False):
-        if headers is None:
-            headers = {}
+    def render_file(self, out_file, status_code=200, auto_delete=False):
 
         writelog(request.remote_addr + ' render_file:' + str(out_file) + '\n')
         try:
@@ -101,9 +99,9 @@ class Render():
             fp.close()
 
             response.headers['Access-Control-Request-Method'] = 'POST, GET, OPTIONS'
-            response.headers['Access-Control-Allow-Origin'] = headers.get('Origin', '*')
+            response.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin', '*')
 
-            if headers.get('Origin', ''):
+            if request.headers.get('Origin', ''):
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
 
             if auto_delete and os.path.exists(out_file):
